@@ -15,7 +15,7 @@ import {
 import SplashScreen from 'react-native-splash-screen';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import React, {useState, useEffect, useRef} from 'react';
-// import {updateAgentStatus} from '../../API/ApiCalls';
+ 
 import {
   EndAppointment,
   SearchProducts,
@@ -62,14 +62,6 @@ function CallScreen({navigation, route}) {
   var array = [{name: 'Call'}, {name: 'Chat'}, {name: 'Catalog'}];
   const {notificationData, decryptedKey, profileData} = route.params;
   let endBtnClick = true;
-  // console.log('------------------------', notificationData, decryptedKey);
-  // console.log('Global messages', messages);
-  // console.log('subscriber event gloabal', subscriberDetailsID);
-  // console.log('------------------------', notificationData.additionalData);
-  // console.log(
-  //   '------------------------',
-  //   notificationData.additionalData.SessionId,
-  // );
 
   const endAppointment = async () => {
     try {
@@ -85,7 +77,6 @@ function CallScreen({navigation, route}) {
         'Agent',
       );
     } catch (e) {
-      // console.log(e);
       Alert.alert('Error', e.message);
     }
   };
@@ -109,14 +100,10 @@ function CallScreen({navigation, route}) {
           asyncLoginData.agentSessionID,
         );
         products([getproductsbysku.data.ProductDetails]);
-        // setCategories([getproductsbysku.data.ProductDetails]);
       } else {
         products(searchProducts.data);
-        // setCategories(searchProducts.data);
       }
-      // productstwo(searchProducts.data);
     } catch (e) {
-      // console.log(e);
       Alert.alert('Error', e.message);
     }
   };
@@ -125,7 +112,6 @@ function CallScreen({navigation, route}) {
     ProductDetails.map((item, index) => {
       const img = JSON.parse(item.ImageUrls).ImageUrls;
       const spece = JSON.parse(item.Specs);
-      // console.log('specs', spece);
       cars.push({
         Primaryproduct: 'Primary Product',
         Model: spece.Make + '\t' + spece.Model,
@@ -133,7 +119,6 @@ function CallScreen({navigation, route}) {
         Price: 'Price' + spece.Price,
         url: img[0],
       });
-      // console.log('pro', cars);
       setCategories(cars);
     });
   };
@@ -149,12 +134,8 @@ function CallScreen({navigation, route}) {
         notificationData.additionalData.RetailerUserId,
         asyncLoginData.agentSessionID,
       );
-      // console.log('abc', getproductsbysku.data.ProductDetails.Specs);
       products([getproductsbysku.data.ProductDetails]);
-      // setCategories([getproductsbysku.data.ProductDetails]);
-      // products(getproductsbysku.data.ProductDetails);
     } catch (e) {
-      // console.log(e);
       Alert.alert('Error', e.message);
     }
   };
@@ -191,7 +172,6 @@ function CallScreen({navigation, route}) {
         status,
       );
     } catch (e) {
-      // console.log(e);
       Alert.alert('Error', e.message);
     }
   };
@@ -213,8 +193,6 @@ function CallScreen({navigation, route}) {
         Timer();
         noSkuvalue();
         const connetedEvent = e;
-        // console.log('connected yes', e);
-        // console.log('connected yes 2', connetedEvent.stream.connectionId);
 
         setSubscriberDetailsID(connetedEvent.stream.connectionId);
         Promise.all([getProductsBySKU(), updateAgentstatus('Connected')]);
@@ -270,20 +248,6 @@ function CallScreen({navigation, route}) {
       console.log('24.......session connection created', obj);
     },
     connectionDestroyed: obj => {
-      // console.log(
-      //   'check check check',
-      //   subscriberDetailsID === obj.connectionId,
-      // );
-      // console.log('check connection ID', obj.connectionId);
-      // console.log('check subscriber ID', subscriberDetailsID);
-      // if (subscriberDetailsID !== obj.connectionId) {
-
-      // console.log(
-      //   'check check check2222222',
-      //   subscriberDetailsID !== obj.connectionId,
-      // );
-
-      // setBtnClick(true);
 
       console.log('25...... connection Destroyed', obj);
     },
@@ -304,23 +268,14 @@ function CallScreen({navigation, route}) {
     },
     signal: event => {
       const parsedEventData = JSON.parse(event.data);
-      // console.log('events 3', parsedEventData.type);
-      // console.log('events 2', event.data);
-      // console.log('events', event);
-      // console.log('events 2', JSON.parse(event.data));
       if (
         parsedEventData.type === 'MESSAGEFROMAGENT' ||
         parsedEventData.type === 'MESSAGEFROMCUSTOMER'
       ) {
         if (event.data) {
-          // console.log('Messages', messages);
           const chatDataJson = event.data;
           const chatData = JSON.parse(chatDataJson);
-          // console.log('chatData', chatData.data);
-          // console.log('chatData2', chatData.data.data);
           setMessages(prevMsg => {
-            // return [{data: `Me: ${event.data}`, type: 'SignalMsg'}, ...prevMsg];
-            // return [{event}, ...prevMsg];
             return [
               {
                 data: chatData.data,
@@ -332,22 +287,18 @@ function CallScreen({navigation, route}) {
           });
         }
       } else if (parsedEventData.type === 'CONTACTDETAILS') {
-        // console.log('Messages', messages);
         const chatDataJson = event.data;
         const chatData = JSON.parse(chatDataJson);
-        // console.log('chatData', chatData.data);
         setMessages(prevMsg => {
           return [
             {
               data: chatData.data,
               type: chatData.type,
-              //  agentName: chatData.agentName,
             },
             ...prevMsg,
           ];
         });
       } else {
-        // console.log('NOTHING');
       }
     },
   };
@@ -366,17 +317,14 @@ function CallScreen({navigation, route}) {
         setText('');
       }
     } else if (type === 'CONTACTDETAILS') {
-      // console.log('CONTACT DETAILS', textData);
       const signalData = {
         data: textData,
         type: type,
-        // agentName: profileData.data.FirstName,
       };
 
       sessionRef.current.signal({
         data: JSON.stringify(signalData),
       });
-      // setText('');
     } else if (type === 'ADDTOCART') {
       const signalData = {
         data: textData,
@@ -390,8 +338,6 @@ function CallScreen({navigation, route}) {
       const signalData = {
         data: textData,
         type: type,
-        // price: '1190',
-        // agentName: profileData.data.FirstName,
       };
       sessionRef.current.signal({
         data: JSON.stringify(signalData),
@@ -399,7 +345,6 @@ function CallScreen({navigation, route}) {
     }
   };
   const sessionIdFunc = value => {
-    // console.log('the session', value);
   };
 
   const publisherEventHandlers = {
@@ -418,21 +363,17 @@ function CallScreen({navigation, route}) {
     );
   };
   useEffect(() => {
-    // Timer();
-    // console.log(seconds);
     if (seconds > 59) {
       setseconds(0);
       setMinute(prev => prev + 1);
     }
   }, [seconds, minute, id]);
   const sessionId = value => {
-    // console.log('the session', value);
   };
 
   const HideKeyboardEvent = Keyboard.addListener('keyboardDidHide', () => {
     setSearchBoxFocus(false);
   });
-  //////////////////////////////////////////////////////////////////////////////////////////
 
   class Agent {
     constructor(description1, description2, description3) {
@@ -652,10 +593,8 @@ function CallScreen({navigation, route}) {
             <View
               style={{
                 flexDirection: 'row',
-                // width: 100,
                 alignItems: 'center',
                 justifyContent: 'flex-start',
-                // backgroundColor: 'red',
               }}>
               <MaterialCommunityIcons
                 name="account"
@@ -669,15 +608,12 @@ function CallScreen({navigation, route}) {
                   textAlign: 'left',
                   marginLeft: 5,
                 }}>
-                {/* something */}
-                {/* {/* {profileData.data.FirstName} */}
                 {item.data.agentName}
               </Text>
             </View>
             <View
               style={{
                 flexDirection: 'row',
-                // width: 180,
                 alignItems: 'center',
                 justifyContent: 'flex-start',
               }}>
@@ -695,9 +631,7 @@ function CallScreen({navigation, route}) {
           style={{
             padding: 10,
             backgroundColor: '#FB8B24',
-            // backgroundColor: 'white',
             marginBottom: 15,
-            // alignItems: 'center',
             justifyContent: 'center',
             borderBottomEndRadius: 20,
             borderBottomLeftRadius: 20,
@@ -726,7 +660,6 @@ function CallScreen({navigation, route}) {
             backgroundColor: 'white',
             marginBottom: 15,
             alignSelf: 'flex-end',
-            // justifyContent: 'center',
             borderBottomEndRadius: 20,
             borderBottomLeftRadius: 20,
             borderTopLeftRadius: 20,
@@ -838,14 +771,7 @@ function CallScreen({navigation, route}) {
           }}>
           <View style={styles.OTcontainer}>
             <OTSession
-              // apiKey="47339381"
-              // sessionId="2_MX40NzMzOTM4MX5-MTYzNzIxMDk2MzYwOX5kbytIUEYvaisvMlY0TnJRRFphWS9qQml-fg"
-              // token="T1==cGFydG5lcl9pZD00NzMzOTM4MSZzaWc9NDYzMGYyMWU5YmRmMzQ5ZDVhZTdlNjc0NmZiOThlZjg5ZTY0N2RmNTpzZXNzaW9uX2lkPTJfTVg0ME56TXpPVE00TVg1LU1UWXpOekl4TURrMk16WXdPWDVrYnl0SVVFWXZhaXN2TWxZMFRuSlJSRnBoV1M5cVFtbC1mZyZjcmVhdGVfdGltZT0xNjM3MjExMDA5Jm5vbmNlPTAuNTcxOTM2OTk5MjA1ODk3MSZyb2xlPXN1YnNjcmliZXImZXhwaXJlX3RpbWU9MTYzOTgwMzAwOCZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ=="
               eventHandlers={sessionEventHandlers}
-              // apiKey="47383431"
-              // sessionId="2_MX40NzM4MzQzMX5-MTYzNzY0NzE3OTM1N34zaDYwMnoyRkgxYUFjK3V5V3RIYTFrbU9-fg"
-              // token="T1==cGFydG5lcl9pZD00NzM4MzQzMSZzaWc9OGZhYWRmMTc0NDQ2MTcxNjQwOTA0NWMwNjQ0MDE0MDkzYTU4ZTgxNTpzZXNzaW9uX2lkPTJfTVg0ME56TTRNelF6TVg1LU1UWXpOelkwTnpFM09UTTFOMzR6YURZd01ub3lSa2d4WVVGakszVjVWM1JJWVRGcmJVOS1mZyZjcmVhdGVfdGltZT0xNjM3NjQ3MTc5Jm5vbmNlPTAuMDg2NDcxMDY3MDI4MTY5NDImcm9sZT1tb2RlcmF0b3ImZXhwaXJlX3RpbWU9MTYzODI1MTk3OSZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ=="
-              apiKey={decryptedKey}
               sessionId={notificationData.additionalData.SessionId}
               token={notificationData.additionalData.TokenId}
               signal={signal}
@@ -865,16 +791,6 @@ function CallScreen({navigation, route}) {
                 />
               </View>
             </OTSession>
-
-            {/* <Image
-            resizeMode="contain"
-            source={require('../../../assets/Group.png')}
-            style={{width: '100%', height: '46%', backgroundColor: 'grey'}}
-          /> */}
-            {/* <Image
-            style={{width: '70%', height: '44%', backgroundColor: 'grey'}}
-            source={require('../../../assets/Group.png')}
-            resizeMode="contain"></Image> */}
           </View>
           <TouchableOpacity
             onPress={() => {
@@ -1040,12 +956,10 @@ function CallScreen({navigation, route}) {
                 style={{width: '80%', color: 'black'}}
                 placeholder="Type Message Here"
                 onChangeText={val => {
-                  // console.log('textvalue', val);
                   setText(val);
                 }}
                 value={text}
                 placeholderTextColor="#555"
-                // underlineColorAndroid="transparent"
               />
               <TouchableOpacity style={styles.imageStyle}>
                 <MaterialCommunityIcons
@@ -1072,11 +986,6 @@ function CallScreen({navigation, route}) {
             </View>
           </View>
         </View>
-
-        {/* <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
-          style={{display: idno === 2 ? 'flex' : 'none', flex: 1}}> */}
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <KeyboardAvoidingView
             keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 80}
@@ -1085,15 +994,12 @@ function CallScreen({navigation, route}) {
             style={{display: idno === 2 ? 'flex' : 'none', flex: 1}}>
             {videoButton()}
             {APILoading ? (
-              // <ActivityIndicator />
-              // <Modal transparent={true}>
               <View
                 style={{
                   backgroundColor: 'black',
                   flex: 1,
                   justifyContent: 'center',
                   opacity: 0.65,
-                  // position: 'absolute',
                 }}>
                 <ActivityIndicator size="large" color="#FB8B24" />
               </View>
@@ -1101,13 +1007,8 @@ function CallScreen({navigation, route}) {
               <View
                 style={{
                   width: '100%',
-                  // height: '85%',
-                  // flex: 1,
-                  // backgroundColor: 'yellow',
                   alignItems: 'center',
                   alignSelf: 'center',
-                  // flexDirection: 'column',
-                  // paddingBottom: 50,
                   marginTop: 90,
                   justifyContent: 'space-evenly',
                 }}>
@@ -1153,49 +1054,22 @@ function CallScreen({navigation, route}) {
                 />
               </View>
             )}
-            {/* <View
-              style={{
-                width: '85%',
-                backgroundColor: 'grey',
-                // height: '5%',
-                // marginTop: 20,
-                borderRadius: 5,
-                position: 'absolute',
-                bottom: 80,
-                alignSelf: 'center',
-                // marginBottom: 10,
-              }}>
-              <Text
-                style={{
-                  alignSelf: 'center',
-                  fontWeight: '500',
-                  color: 'white',
-                  fontSize: 16,
-                }}>
-                * Prices may not reflect promotional discounts
-              </Text>
-            </View> */}
+       
+         
             <View
-              // keyboardVerticalOffset={-76}
-              // behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
-              // enabled
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-around',
                 height: '10%',
                 width: '100%',
-                // backgroundColor: 'yellow',
                 alignItems: 'center',
                 position: 'absolute',
                 bottom: 0,
                 overflow: 'visible',
-                // zIndex: -1,
-                // flex: 1,
               }}>
               <View
                 style={{
                   flexDirection: 'row',
-                  // marginTop: 20,
                   alignItems: 'center',
                   width: searchBoxFocus ? '80%' : '35%',
                   backgroundColor: '#fff',
@@ -1210,16 +1084,13 @@ function CallScreen({navigation, route}) {
                 <TextInput
                   style={{
                     color: 'black',
-                    // padding: 5,
                     width: '85%',
-                    // backgroundColor: 'teal',
                   }}
                   value={searchText}
                   onPressIn={() => {
                     setSearchBoxFocus(true);
                   }}
                   onChangeText={async val => {
-                    // console.log('onchange input', val);
                     setAPILoading(true);
                     setSearchText(val);
                     notificationData.additionalData.SKU == null ||
@@ -1237,7 +1108,6 @@ function CallScreen({navigation, route}) {
                 <Ionicons
                   name="search-outline"
                   size={24}
-                  // style={styles.imageStyle}
                 />
               </View>
               {!searchBoxFocus && (
@@ -1275,7 +1145,6 @@ function CallScreen({navigation, route}) {
                 </View>
               )}
             </View>
-            {/* </KeyboardAvoidingView> */}
           </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
       </View>
@@ -1283,7 +1152,6 @@ function CallScreen({navigation, route}) {
       {/* //timer and send contact */}
       {timerandcontactbar && (
         <View style={styles.timerandcontactbar}>
-          {/* <View style={styles.timerandcontactbarinside}> */}
           <View style={styles.timerbar}>
             <Ionicons
               name="alarm-outline"
@@ -1301,7 +1169,6 @@ function CallScreen({navigation, route}) {
             ) : (
               <Text style={styles.timerNumber}>{seconds}</Text>
             )}
-            {/* <Text style={{color: 'white', fontSize: 15}}>00 : 00</Text> */}
           </View>
           <TouchableOpacity
             style={styles.contactontouch}
@@ -1318,21 +1185,17 @@ function CallScreen({navigation, route}) {
             }}>
             <FontAwesome5
               name="address-book"
-              // style={{alignSelf: 'center'}}
               size={15}
               color={'white'}
             />
 
-            {/* <Text style={{color: 'white', fontSize: 15}}>Send Contact</Text> */}
             <Text style={{color: 'white', fontSize: 15}}>Send Contact</Text>
             <MaterialCommunityIcons
               name="chevron-right"
-              // style={{alignSelf: 'flex-start'}}
               size={20}
               color={'white'}
             />
           </TouchableOpacity>
-          {/* </View> */}
         </View>
       )}
       {/* //calling agent  */}
@@ -1471,11 +1334,6 @@ const styles = ScaledSheet.create({
     justifyContent: 'space-around',
   },
 
-  timerandcontactbarinside: {
-    // marginLeft: '10@s',
-    // backgroundColor: 'yellow',
-  },
-
   mutebar: {
     backgroundColor: '#696969',
     width: '162@s',
@@ -1553,14 +1411,9 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: '5@vs',
-    // backgroundColor: 'green',
-  },
-  catalogImageContainer: {
-    // backgroundColor: 'red',
   },
   catalogDataContainer: {
     width: '70%',
-    // backgroundColor: 'yellow',
     padding: '5@ms',
   },
   catalogDataTitle: {
@@ -1581,7 +1434,6 @@ const styles = ScaledSheet.create({
   catalogShareAddContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // backgroundColor: 'red',
   },
   shareContainer: {
     flexDirection: 'row',
@@ -1593,7 +1445,6 @@ const styles = ScaledSheet.create({
     borderWidth: '2@vs',
     borderRadius: '6@s',
     alignItems: 'center',
-    // justifyContent: 'center',
   },
   shareTxt: {
     color: '#FB8B24',
@@ -1666,7 +1517,6 @@ const styles = ScaledSheet.create({
     height: '78@vs',
     paddingBottom: '20@vs',
     backgroundColor: '#fff5ee',
-    // backgroundColor: 'yellow',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     flexDirection: 'row',
@@ -1679,7 +1529,6 @@ const styles = ScaledSheet.create({
     bottom: 0,
     paddingHorizontal: '20@s',
     paddingTop: '20@vs',
-    //justifyContent: 'space-evenly',
     width: '100%',
     height: '80%',
     backgroundColor: '#fff5ee',
@@ -1700,7 +1549,6 @@ const styles = ScaledSheet.create({
 
   roundshape: {
     backgroundColor: '#fa8072',
-    // backgroundColor: 'green',
     height: '60@s', //any of height
     width: '60@s', //any of width
     justifyContent: 'center',
@@ -1754,7 +1602,6 @@ const styles = ScaledSheet.create({
     right: '12@s',
     top: '270@vs',
     backgroundColor: '#a9a9',
-    // backgroundColor: 'green',
     height: '50@s', //any of height
     width: '50@s',
     justifyContent: 'center',
@@ -1767,7 +1614,6 @@ const styles = ScaledSheet.create({
     top: '270@vs',
     right: '12@s',
     backgroundColor: '#6969',
-    // backgroundColor: 'red',
     height: '50@s', //any of height
     width: '50@s',
     zIndex: 1,
@@ -1796,7 +1642,6 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     width: '86%',
     backgroundColor: '#fff',
-    // backgroundColor: 'red',
     borderWidth: 0.5,
     borderColor: '#000',
     height: '40@vs',
@@ -1822,8 +1667,6 @@ const styles = ScaledSheet.create({
   addinputstyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // position: 'relative',
-    // marginTop: '20@vs',
     left: '20@s',
     padding: 5,
     alignItems: 'center',
@@ -1846,19 +1689,14 @@ const styles = ScaledSheet.create({
   OTcontainer: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    // position: 'relative',
-    // marginTop: '10@vs',
     height: '90%',
-    // backgroundColor: 'green',
   },
   OTPublishercontainer: {
     width: '100%',
-    // backgroundColor: 'yellow',
     height: '50%',
   },
   OTSubscriberContainer: {
     width: '100%',
-    // backgroundColor: 'red',
     height: '60%',
   },
 });
