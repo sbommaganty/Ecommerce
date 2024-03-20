@@ -1,4 +1,5 @@
 ## Ecommerce  🎹
+
 - React Native Application:
 
 ## Description 📋
@@ -7,7 +8,13 @@
 
 - The application uses Vonage APIs to provide an audio-video and chat interface between customers and retailers, helping to pull up information available for a product - including pricing, bundling, offers, availability, and promotions to provide customers with answers to every question.
 
-This project utilized the benefits of multiple packages such as :
+This project utilized the benefits of multiple technologies such as 
+- Android SDK
+- JavaScript (ES6+)
+- CocoaPods(for mac only)
+- React
+
+This project utilized multiple packages such as :
 
 - react-native-async-storage/async-storage: For asynchronous storage management in React Native apps.
 
@@ -26,15 +33,22 @@ This project utilized the benefits of multiple packages such as :
 - opentok-react-native: For integrating the OpenTok platform with React Native applications, enabling real-time video, voice, and messaging features.
  
 ### Prerequisites☔
-You will need to install Visual Studio Code.
+
 - Ensure Node.js installed, download from official website.
+
 - npm or Yarn for managing dependencies.
-- Install React Native CLI globally using npm or Yarn.
+
+- Install React Native CLI globally using npm.
+
 - JDK version 8 or later for Android app development.
+
 - Android Studio for Android app development.
+
 - Xcode for iOS development, download from Mac App Store.
+
 - Install CocoaPods using RubyGems for managing iOS dependencies(only in mac).
-- Choose a visual studio code editor for writing React Native code.
+
+- You will need to install Visual Studio code.
 
 **Clone the repo :** 
 ```
@@ -45,7 +59,9 @@ git clone <repository Url>
 
 **Run the application** 
 ```
-Use Ctrl + Shift + F9 to run the project. And also use your Android phone for better experience.
+- Use the command npm install to install the necessary dependencies and run the command npm run android in windows or npm ios in mac. 
+- And also use your Android phone or iOS device for better experience.
+
 ```
 ## Built With 🎯
 **React Native**
