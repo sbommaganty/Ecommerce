@@ -1,6 +1,4 @@
-## Ecommerce  🎹
-
-- React Native Application:
+## Ecommerce(Built using React Native) 🛒
 
 ## Description 📋
 
@@ -42,9 +40,9 @@ This project utilized multiple packages such as :
 
 - JDK version 8 or later for Android app development.
 
-- Android Studio for Android app development.
+- Android Studio for Android app development(Windows or Mac).
 
-- Xcode for iOS development, download from Mac App Store.
+- Xcode for iOS development, download from Mac App Store(only in mac only).
 
 - Install CocoaPods using RubyGems for managing iOS dependencies(only in mac).
 
