@@ -1,4 +1,4 @@
-## Ecommerce(Built using React Native) 🛒
+## Ecommerce (Built using React Native) 🛒
 
 ## Description 📋
 
